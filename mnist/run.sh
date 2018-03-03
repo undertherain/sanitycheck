@@ -1,6 +1,6 @@
 #!/bin/sh
 #$ -cwd
-#$ -l f_node=1
+#$ -l f_node=2
 #$ -l h_rt=00:10:00
 #$ -N mnist
 #$ -m abe
@@ -13,7 +13,7 @@ source /home/1/drozd-a-aa/apps.sh
 mpirun \
   -output-proctable \
   -mca pml ob1 \
-  -np 4 \
+  -np 8 \
   -npernode 4 \
   -x PATH \
   -x LD_LIBRARY_PATH \
