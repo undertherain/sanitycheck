@@ -9,8 +9,9 @@ import chainer.links as L
 from chainer import training
 from chainer.training import extensions
 from mpi4py import MPI
-
 import chainermn
+import logging
+logging.basicConfig(level=logging.DEBUG)
 
 
 class MLP(chainer.Chain):
@@ -91,18 +92,17 @@ def main():
         train, test = None, None
     train = chainermn.scatter_dataset(train, comm, shuffle=True)
     test = chainermn.scatter_dataset(test, comm, shuffle=True)
-
+    print(len(train))
     train_iter = chainer.iterators.SerialIterator(train, args.batchsize)
-    test_iter = chainer.iterators.SerialIterator(test, args.batchsize,
-                                                 repeat=False, shuffle=False)
+    # test_iter = chainer.iterators.SerialIterator(test, args.batchsize, repeat=False, shuffle=False)
 
     updater = training.StandardUpdater(train_iter, optimizer, device=device)
     trainer = training.Trainer(updater, (args.epoch, 'epoch'), out=args.out)
 
     # Create a multi node evaluator from a standard Chainer evaluator.
-    evaluator = extensions.Evaluator(test_iter, model, device=device)
-    evaluator = chainermn.create_multi_node_evaluator(evaluator, comm)
-    trainer.extend(evaluator)
+    # evaluator = extensions.Evaluator(test_iter, model, device=device)
+    # evaluator = chainermn.create_multi_node_evaluator(evaluator, comm)
+    # trainer.extend(evaluator)
 
     # Some display and output extensions are necessary only for one worker.
     # (Otherwise, there would just be repeated outputs.)
@@ -116,6 +116,10 @@ def main():
 
     if args.resume:
         chainer.serializers.load_npz(args.resume, trainer)
+
+    comm.mpi_comm.Barrier()
+    if comm.rank == 0:
+        print("start training")
 
     trainer.run()
 
