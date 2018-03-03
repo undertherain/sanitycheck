@@ -16,6 +16,10 @@ def main():
     comm = MPI.COMM_WORLD
     print("Hello! I'm rank %d from %d running in total..." % (comm.rank, comm.size))
     comm.Barrier()
+    # test mpi bcast on numby array
+    array = np.array([comm.rank] * 10, dtype=np.int32)
+    if comm.rank == 1:
+        print("array:", array)
 
 
 if __name__ == "__main__":
