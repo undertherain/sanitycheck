@@ -1,7 +1,7 @@
 #!/bin/sh
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=2
-#SBATCH --job-name=mnist
+#SBATCH --job-name=mpi4py_cuda
 #SBATCH -t 0-0:20 # time (D-HH:MM) 
 
 
