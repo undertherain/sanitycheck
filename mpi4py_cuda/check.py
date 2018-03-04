@@ -13,11 +13,10 @@ def array_to_buffer_object(array):
         return array
     else:
         ffi = cffi.FFI()
-        return (ffi.buffer(ffi.cast('void *', array.data.ptr), array.nbytes), MPI.FLOAT)
+        return (ffi.buffer(ffi.cast('void *', array.data.ptr), array.nbytes), array.size, MPI.FLOAT)
 
 
 def main():
-
     comm = chainermn.create_communicator("hierarchical")
     comm_mpi = comm.mpi_comm
     print(f"Rank {comm.rank} [mpi {comm_mpi.Get_rank()}], inner rank {comm.intra_rank} on {MPI.Get_processor_name()} from {comm.size} running in total..."  )
@@ -37,6 +36,8 @@ def main():
     if comm_mpi.rank == 1:
         print("gpu array before bcast:", array[:2])
     buf = array_to_buffer_object(array)
+    if comm_mpi.rank == 1:
+        print(f"created cffi buf, size = {len(buf[0])}, type={buf[2]}")
     comm_mpi.Bcast(buf)
     if comm_mpi.rank == 1:
         print("gpu array after bcast:", array[:2])

@@ -2,7 +2,7 @@
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=2
 #SBATCH --job-name=mpi4py_cuda
-#SBATCH -t 0-0:20 # time (D-HH:MM) 
+#SBATCH -t 0-0:10 # time (D-HH:MM) 
 
 
 #source ./modules.sh
