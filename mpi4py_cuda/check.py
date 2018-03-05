@@ -13,7 +13,7 @@ def array_to_buffer_object(array):
         return array
     else:
         ffi = cffi.FFI()
-        return (ffi.buffer(ffi.cast('void *', array.data.ptr), array.nbytes), array.size, MPI.FLOAT)
+        return (ffi.buffer(ffi.cast('float *', array.data.ptr), array.nbytes), array.size, MPI.FLOAT)
 
 
 def main():
