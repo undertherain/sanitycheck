@@ -13,8 +13,11 @@ for id_device in range(cnt_devices):
     print("creating tensor on device")
     chunks = []
     cnt_chunks = 10
+    coef_memory_to_use = 0.7
+    bytes_in_datatype = 4
+    chunk_size = int(coef_memory_to_use * mem_size / bytes_in_datatype / cnt_chunks)
     for id_chunk in range(cnt_chunks):
-        a = torch.rand(int(0.7 * mem_size / 4 / cnt_chunks), dtype=torch.float32, device=id_device)
+        a = torch.rand(chunk_size, dtype=torch.float32, device=id_device)
         print(a.mean())
         chunks.append(a)
 
