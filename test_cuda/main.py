@@ -10,12 +10,12 @@ for id_device in range(cnt_devices):
     properties = torch.cuda.get_device_properties(id_device)
     print(properties)
     mem_size = properties.total_memory
-    print("creating tensor on device")
     chunks = []
     cnt_chunks = 10
     coef_memory_to_use = 0.7
     bytes_in_datatype = 4
     chunk_size = int(coef_memory_to_use * mem_size / bytes_in_datatype / cnt_chunks)
+    print("creating tensors on devicem, size", chunk_size)
     for id_chunk in range(cnt_chunks):
         a = torch.rand(chunk_size, dtype=torch.float32, device=id_device)
         print(a.mean())
