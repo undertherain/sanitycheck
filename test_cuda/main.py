@@ -14,6 +14,8 @@ for id_device in range(cnt_devices):
     chunks = []
     cnt_chunks = 10
     for id_chunk in range(cnt_chunks):
-        chunks.append(torch.rand(int(0.7 * mem_size / 4 / cnt_chunks), dtype=torch.float32, device=id_device))
+        a = torch.rand(int(0.7 * mem_size / 4 / cnt_chunks), dtype=torch.float32, device=id_device)
+        print(a.mean())
+        chunks.append(a)
 
 # torch.cuda.can_device_access_peer(device, peer_device)[source]
