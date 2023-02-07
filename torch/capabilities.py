@@ -6,7 +6,6 @@ print("python version:", sys.version_info)
 print("running from  :", sys.executable)
 print()
 print("torch version : ", torch.__version__)
-
 print()
 print("cuda avail: ", torch.cuda.is_available())
 print("distr avail:", torch.distributed.is_available())
