@@ -1,5 +1,5 @@
 import torch
-
+print("cuda available:", torch.cuda.is_available())
 cnt_devices = torch.cuda.device_count()
 print("cuda initialized:", torch.cuda.is_initialized())
 print("cnt cnt_devices:", cnt_devices)
