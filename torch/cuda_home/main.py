@@ -1,2 +1,2 @@
-from torch.utils.cpp_extensions import CUDA_HOME
+from torch.utils.cpp_extension import CUDA_HOME
 print(CUDA_HOME)
